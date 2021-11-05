@@ -1,5 +1,6 @@
 package com.kelvinsnir.covidtracker.services;
 
+import com.kelvinsnir.covidtracker.models.RegionStats;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +10,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @Service
 public class CoronaVirusDataService {
     private static String VIRUS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
+     private List<RegionStats> allstats= new ArrayList<>();
     @PostConstruct
-    @Scheduled(cron = "* * * 1 * *")
+    @Scheduled(cron = "* * * 1 * *")g
     public void fetchVirusData() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request =  HttpRequest.newBuilder()
