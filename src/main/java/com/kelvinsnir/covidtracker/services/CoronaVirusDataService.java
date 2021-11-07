@@ -30,7 +30,7 @@ public class CoronaVirusDataService {
        HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
         StringReader csvBodyReader = new StringReader(httpResponse.body());
 
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
+        Iterable<CSVRecord> records = CSFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
         for (CSVRecord record : records) {
            RegionStats regionStats = new RegionStats();
            regionStats.setState(record.get("Province/State"));
