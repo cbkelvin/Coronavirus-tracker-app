@@ -28,4 +28,13 @@ public class RegionStats {
     public void setCurrentTotalCases(int currentTotalCases) {
         this.currentTotalCases = currentTotalCases;
     }
+
+    @Override
+    public String toString() {
+        return "RegionStats{" +
+                "state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", currentTotalCases=" + currentTotalCases +
+                '}';
+    }
 }

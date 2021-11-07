@@ -6,20 +6,23 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CoronaVirusDataService {
     private static String VIRUS_DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
-     private List<RegionStats> allstats= new ArrayList<>();
+     private List<RegionStats> allStats= new ArrayList<>();
     @PostConstruct
-    @Scheduled(cron = "* * * 1 * *")g
+    @Scheduled(cron = "* * * 1 * *")
     public void fetchVirusData() throws IOException, InterruptedException {
+        List<RegionStats> newStats= new ArrayList<>();
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request =  HttpRequest.newBuilder()
                 .uri(URI.create(VIRUS_DATA_URL))
@@ -29,9 +32,13 @@ public class CoronaVirusDataService {
 
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
         for (CSVRecord record : records) {
-            String id = record.get("ID");
-            String customerNo = record.get("CustomerNo");
-            String name = record.get("Name");
+           RegionStats regionStats = new RegionStats();
+           regionStats.setState(record.get("Province/State"));
+           regionStats.setCountry(record.get("Country/Region"));
+           regionStats.setCurrentTotalCases(Integer.parseInt(record.get(record.size()-1)));
+            System.out.println(regionStats);
+            newStats.add(regionStats);
         }
+        this.allStats = newStats;
     }
 }
