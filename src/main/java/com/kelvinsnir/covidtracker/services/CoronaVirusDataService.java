@@ -1,6 +1,8 @@
 package com.kelvinsnir.covidtracker.services;
 
 import com.kelvinsnir.covidtracker.models.RegionStats;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,7 @@ public class CoronaVirusDataService {
        HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
         StringReader csvBodyReader = new StringReader(httpResponse.body());
 
-        Iterable<CSVRecord> records = CSFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
         for (CSVRecord record : records) {
            RegionStats regionStats = new RegionStats();
            regionStats.setState(record.get("Province/State"));
