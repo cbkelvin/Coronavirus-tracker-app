@@ -1,10 +1,4 @@
-# coronavirus-tracker-app
-Coronavirus tracker application using Spring boot Java app
-
-# Coronavirus Tracker App
-
-![Coronavirus Tracker](https://via.placeholder.com/1200x400.png?text=Coronavirus+Tracker+App)
-
+# COVID Tracker App
 A web application built to track COVID-19 cases globally. It displays live data about confirmed cases, recoveries, and deaths, allowing users to stay informed during the pandemic.
 
 ## Features
